@@ -11,7 +11,7 @@ function checkFrom() {
     $('#registerForm').submit(function () {
         if (checkUsername() && checkPassword() && checkEmail() && checkRealname() && checkPhone() && checkBirthday() /*&& checkCodeFront()*/) {
             /*serialize()序列化表单数据为key=value形式*/
-            $.post("/registerUserServlet", $(this).serialize(), function (data) {
+            $.post("/user/register", $(this).serialize(), function (data) {
                 if (data.flag){
                     location.href = "register_ok.html"
                 }else {

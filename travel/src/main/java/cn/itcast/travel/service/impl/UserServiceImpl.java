@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
             user.setCode(UuidUtil.getUuid());
             user.setStatus("N");
             userDao.saveUser(user);
-            String content = "<a href='http://localhost:18083/activeUserServlet?code="+user.getCode()+"'>点击激活</a>";
+            String content = "<a href='http://localhost:18083/user/active?code="+user.getCode()+"'>点击激活</a>";
             MailUtils.sendMail(user.getEmail(),content,"激活邮件");
             return true;
         }
@@ -46,5 +46,23 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+     /***
+      *
+      * 功能描述:登录方法
+      *
+      * @param:
+      * @return:
+      * @auther: wangjialing
+      * @date: 2019/12/24 0024 16:20
+      */
+    @Override
+    public User login(User user) {
+        User userByUser = userDao.findUserByUser(user.getUsername(), user.getPassword());
+        if (user!=null){
+            return userByUser;
+        }
+        return null;
     }
 }

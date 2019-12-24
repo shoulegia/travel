@@ -8,4 +8,6 @@ public interface UserDao {
     void saveUser(User user);
 
     User findUserByCode(String code);
+
+    User findUserByUser(String username, String password);
 }
