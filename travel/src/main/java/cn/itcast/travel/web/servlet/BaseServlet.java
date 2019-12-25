@@ -1,5 +1,7 @@
 package cn.itcast.travel.web.servlet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +22,7 @@ public class BaseServlet extends HttpServlet {
             Method method = this.getClass().getMethod(methodName, HttpServletRequest.class, HttpServletResponse.class);
            /* //暴力反射
             method.setAccessible(true);*/
-            method.invoke(this,req,resp);
+            method.invoke(this, req, resp);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -28,5 +30,29 @@ public class BaseServlet extends HttpServlet {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 描述:序列化对象为json
+     *
+     * @author wangjialing
+     * @date 2019/12/25 0025
+     */
+    public void writeValue(Object obj, HttpServletResponse resp) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        resp.setContentType("application/json;charset=utf-8");
+        mapper.writeValue(resp.getOutputStream(), obj);
+    }
+
+    /**
+     * 描述:序列化对象为String
+     *
+     * @author wangjialing
+     * @date 2019/12/25 0025
+     */
+    public void writeValue(String obj, HttpServletResponse resp) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        resp.setContentType("application/json;charset=utf-8");
+        mapper.writeValueAsString(obj);
     }
 }
