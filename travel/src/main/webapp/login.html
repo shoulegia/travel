@@ -19,6 +19,7 @@
     <!--导入jquery-->
     <script src="js/jquery-3.3.1.js"></script>
     <script>
+        //登录
         $(function () {
             $("#loginBtn").click(function () {
                 $.post("/user/login", $("#loginForm").serialize(), function (data) {
