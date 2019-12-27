@@ -6,9 +6,9 @@ import java.io.Serializable;
  * 收藏实体类
  */
 public class Favorite implements Serializable {
-    private Route route;//旅游线路对象
+    private Integer rid;//旅游线路对象
     private String date;//收藏时间
-    private User user;//所属用户
+    private Integer uid;//所属用户
 
     /**
      * 无参构造方法
@@ -18,22 +18,22 @@ public class Favorite implements Serializable {
 
     /**
      * 有参构造方法
-     * @param route
+     * @param rid
      * @param date
-     * @param user
+     * @param uid
      */
-    public Favorite(Route route, String date, User user) {
-            this.route = route;
-            this.date = date;
-            this.user = user;
+    public Favorite(Integer rid, String date, Integer uid) {
+        this.rid = rid;
+        this.date = date;
+        this.uid = uid;
     }
 
-    public Route getRoute() {
-        return route;
+    public Integer getRid() {
+        return rid;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public void setRid(Integer rid) {
+        this.rid = rid;
     }
 
     public String getDate() {
@@ -44,11 +44,11 @@ public class Favorite implements Serializable {
         this.date = date;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUid() {
+        return uid;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 }

@@ -9,21 +9,27 @@
     <link rel="stylesheet" type="text/css" href="css/common.css">
     <link rel="stylesheet" href="css/search.css">
     <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/getParameter.js"></script>
 </head>
 <script>
     $(function () {
-        var search = location.search;
-        var cid = search.split("=")[1];
-        loadRoute(cid, 1);
+        var cid = getParameter("id");
+        var rname = getParameter("rname");
+        if (rname) {
+            //参数解码
+            rname = window.decodeURIComponent(rname);
+        }
+
+        loadRoute(cid, 1, rname);
     });
 
-    function loadRoute(cid, currentPage) {
-        $.get("/route/pageQuery", {cid: cid, currentPage: currentPage}, function (data) {
+    function loadRoute(cid, currentPage, rname) {
+        $.get("/route/pageQuery", {cid: cid, currentPage: currentPage, rname: rname}, function (data) {
             $("#totalCount").html(data.totalCount);
             $("#totalPage").html(data.totalPage);
 
             var lis = '';
-            var first = '<li style="cursor: pointer" onclick="loadRoute(' + cid + ',1)"><a href="javascript:void(0);">首页</a></li>';
+            var first = '<li style="cursor: pointer" onclick="loadRoute(' + cid + ',1,\'' + rname + '\')"><a href="javascript:void(0);">首页</a></li>';
 
             //上一页
             var before = data.currentPage - 1;
@@ -31,7 +37,7 @@
                 before = 1
             }
 
-            var prefix = '<li style="cursor: pointer" onclick="loadRoute(' + cid + ',' + before + ')" class="threeword"><a >上一页</a></li>';
+            var prefix = '<li style="cursor: pointer" onclick="loadRoute(' + cid + ',' + before + ',\'' + rname + '\')" class="threeword"><a >上一页</a></li>';
             lis += first + prefix;
 
             var begin, end;
@@ -53,9 +59,9 @@
             }
             for (var i = begin; i <= end; i++) {
                 if (data.currentPage == i) {
-                    lis += '<li class="curPage" onclick="loadRoute(' + cid + ',' + i + ')" style="cursor: pointer"><a href="javascript:void(0);" >' + i + '</a></li>'
+                    lis += '<li class="curPage" onclick="loadRoute(' + cid + ',' + i + ',\'' + rname + '\')" style="cursor: pointer"><a href="javascript:void(0);" >' + i + '</a></li>'
                 } else {
-                    lis += '<li onclick="loadRoute(' + cid + ',' + i + ')" style="cursor: pointer"><a href="javascript:void(0);" >' + i + '</a></li>'
+                    lis += '<li onclick="loadRoute(' + cid + ',' + i + ',\'' + rname + '\')" style="cursor: pointer"><a href="javascript:void(0);" >' + i + '</a></li>'
                 }
             }
 
@@ -65,8 +71,8 @@
             if (next >= data.totalPage) {
                 next = data.totalPage
             }
-            var nextfix = '<li style="cursor: pointer" onclick="loadRoute(' + cid + ',' + next + ')" class="threeword"><a ">下一页</a></li>';
-            var last = '<li style="cursor: pointer" onclick="loadRoute(' + cid + ',' + data.totalPage + ')" class="threeword"><a href="javascript:;">末页</a></li>';
+            var nextfix = '<li style="cursor: pointer" onclick="loadRoute(' + cid + ',' + next + ',\'' + rname + '\')" class="threeword"><a ">下一页</a></li>';
+            var last = '<li style="cursor: pointer" onclick="loadRoute(' + cid + ',' + data.totalPage + ',\'' + rname + '\')" class="threeword"><a href="javascript:;">末页</a></li>';
             lis += nextfix + last;
             $("#pageNum").html(lis);
             var routelis = '';
@@ -84,7 +90,7 @@
                     '<span>' + data.list[i].price + '</span>\n' +
                     '<span>起</span>\n' +
                     '</p>\n' +
-                    '<p><a href="route_detail.html">查看详情</a></p>\n' +
+                    '<p><a href="route_detail.html?rid='+data.list[i].rid+'">查看详情</a></p>\n' +
                     '</div>\n' +
                     '</li>';
             }

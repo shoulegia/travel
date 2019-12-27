@@ -1,4 +1,5 @@
 <!-- 头部 start -->
+<script src="js/getParameter.js"></script>
 <script>
     $(function () {
         $.get("/user/findOne", {}, function (data) {
@@ -24,6 +25,14 @@
             }
             lis += '<li><a href="favoriterank.html">收藏排行榜</a></li>'
             $("#category").html(lis);
+        });
+
+        //搜索框事件
+        $("#searchBtn").click(function () {
+            var rname = $("#search").val();
+            var cid = getParameter("id");
+
+            location.href = "http://localhost:18083/route_list.html?id="+cid+"&rname="+rname;
         })
 
     })
@@ -52,8 +61,8 @@
                 <a href="/"><img src="images/logo.jpg" alt=""></a>
             </div>
             <div class="search">
-                <input name="" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
-                <a href="javascript:;" class="search-button">搜索</a>
+                <input name="" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off" id="search">
+                <a href="javascript:;" class="search-button" id="searchBtn">搜索</a>
             </div>
             <div class="hottel">
                 <div class="hot_pic">

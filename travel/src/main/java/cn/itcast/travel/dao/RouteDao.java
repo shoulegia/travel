@@ -7,7 +7,9 @@ import java.util.List;
 public interface RouteDao {
 
     //查询总记录
-    public int findTotalCount(int cid);
+    public int findTotalCount(int cid,String rname);
 
-    public List<Route> findByPage(int cid,int start,int pageSize);
+    public List<Route> findByPage(int cid,int start,int pageSize,String rname);
+
+    public Route findOne(int rid);
 }
